@@ -58,7 +58,7 @@ def parse_diseases(dataframe: pd.DataFrame) -> pd.DataFrame:
         diseases = row["diseases"]
     
         row["has_tendinitis"] = 0
-        row["has_muscle_aches"] = False
+        row["has_muscle_aches"] = 0
         row["has_carpal_tunnel_syndrome"] = 0
         row["has_backache"] = 0
         row["has_bursitis"] = 0
@@ -117,6 +117,38 @@ def parse_college_term(dataframe: pd.DataFrame) -> pd.DataFrame:
     
     return dataframe.assign(already_graduated = already_graduated).assign(college_term = college_term)
 
+
+def parse_hours_on_computer_to_number(dataframe: pd.DataFrame) -> pd.DataFrame:
+    
+    def parse(row: pd.Series) -> pd.Series:
+        hours_on_computer = row["hours_on_computer"]
+        
+        row["less_then_1hour"] = 0
+        row["between_1_and_3_hours"] = 0
+        row["between_3_and_5_hours"] = 0
+        row["between_5_and_8_hours"] = 0
+        row["more_then_8_hours"] = 0
+        
+        if hours_on_computer == "<1":
+            row["less_then_1hour"] = 1
+            
+        if hours_on_computer == "1-3":
+            row["between_1_and_3_hours"] = 1
+            
+        if hours_on_computer == "3-5":
+            row["between_3_and_5_hours"] = 1
+
+        if hours_on_computer == "5-8":
+            row["between_5_and_8_hours"] = 1
+            
+        if hours_on_computer == ">8":
+            row["more_then_8_hours"] = 1
+        
+        return row
+    
+    return dataframe.apply(parse, axis=1).drop("hours_on_computer", inplace=False, axis=1)
+
+
 def parse_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
     return (dataframe
             .pipe(parse_diagnosed_with_ler_column)
@@ -125,6 +157,7 @@ def parse_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
             .pipe(parse_reference_data)
             .pipe(parse_diseases)
             .pipe(parse_college_term)
+            .pipe(parse_hours_on_computer_to_number)
     )
 
         
