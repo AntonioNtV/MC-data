@@ -67,20 +67,20 @@ def parse_diseases(dataframe: pd.DataFrame) -> pd.DataFrame:
         
         for disease in diseases.split(","):
             disease = disease.strip()
-            
+ 
             if disease == "Tendinite":
                 row["has_tendinitis"] = 1
                 
             if disease == "Mialgia (Dores musculares)":
                 row["has_muscle_aches"] = 1
                 
-            if disease == "Síndrome do túnel do carpo (Desconfortos na palma da mão - formigamentos, dormência)":
+            if disease == "Síndrome do túnel do carpo (Desconfortos na palma da mão - formigamentos":
                 row["has_carpal_tunnel_syndrome"] = 1
                 
             if disease == "Lombalgia (Desconfortos na lombar)":
                 row["has_backache"] = 1
                 
-            if disease == "Bursite (Desconfortos na região do ombro, cotovelos e joelhos)":
+            if disease == "Bursite (Desconfortos na região do ombro":
                 row["has_bursitis"] = 1
                 
             if disease == "Síndrome do Olho Seco":
