@@ -56,7 +56,9 @@ def parse_reference_data(dataframe: pd.DataFrame) -> pd.DataFrame:
 def parse_diseases(dataframe: pd.DataFrame) -> pd.DataFrame:
     def parse(row: pd.Series) -> pd.Series:
         diseases = row["diseases"]
-    
+        
+        
+        row["has_any_disease"] = 0
         row["has_tendinitis"] = 0
         row["has_muscle_aches"] = 0
         row["has_carpal_tunnel_syndrome"] = 0
@@ -88,6 +90,9 @@ def parse_diseases(dataframe: pd.DataFrame) -> pd.DataFrame:
                 
             if disease == "Vista Cansada":
                 row["has_eyestrain"] = 1
+        
+        if diseases != "Nenhuma":
+            row["has_any_disease"] = 1
 
         return row
     
@@ -158,6 +163,6 @@ def parse_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
             .pipe(parse_diseases)
             .pipe(parse_college_term)
             .pipe(parse_hours_on_computer_to_number)
-    )
+    )    
 
         
