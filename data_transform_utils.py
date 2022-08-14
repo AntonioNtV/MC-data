@@ -1,5 +1,7 @@
-import pandas as pd 
 from datetime import date, datetime
+
+import pandas as pd
+
 
 def rename_columns(dataframe: pd.DataFrame) -> pd.DataFrame:
     column_names = ["reference_date", "age_group", "college_term", "hours_on_computer", "diseases", "diagnosed_with_ler", "practice_exercises", "practice_stretching", "has_ergonomic_chair", "has_wrist_support"]
